@@ -83,28 +83,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SizedBox(
           height: 30,
         ),
-        InkWell(
-          onTap: (){
-            
-          },
-                  child: Padding(
+        Padding(
             padding: const EdgeInsets.all(20.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Container(
-                  height: 60,
-                  child: RaisedButton(
-                    onPressed: () {},
-                    color: Color(0xFF4A148C),
-                    child: Text('SIGN UP',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20)),
-                  )),
+        height: 60,
+        child: RaisedButton(
+          onPressed: () {Navigator.pushNamed(context, 'Home');},
+          color: Color(0xFF4A148C),
+          child: Text('SIGN UP',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20)),
+        )),
             ),
           ),
-        ),
       ]),
     );
   }
