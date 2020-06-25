@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         InkWell(
           onTap:(){
-            Navigator.pushNamed(context, 'routeName');
+            Navigator.pushNamed(context, 'SignUp');
           },
                   child: Center(
             child: RichText(
