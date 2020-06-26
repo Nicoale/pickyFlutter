@@ -70,24 +70,22 @@ class _SignInScreenState extends State<SignInScreen> {
           height: 20,
         ),
         InkWell(
-          onTap:(){
+          onTap: () {
             Navigator.pushNamed(context, 'SignUp');
           },
-                  child: Center(
+          child: Center(
             child: RichText(
-                text: TextSpan(
-                    text: 'Don\'t have an account? ',
-                    style: TextStyle(
-                      color: Colors.black),
-                      children: <TextSpan>[ 
-                        TextSpan(
+              text: TextSpan(
+                  text: 'Don\'t have an account? ',
+                  style: TextStyle(color: Colors.black),
+                  children: <TextSpan>[
+                    TextSpan(
                         text: 'SIGN UP ',
-                    style: TextStyle(
-                      color: Color(0xFF4A148C),
-                      fontWeight: FontWeight.bold)
-                      )
-                      ]),
-          ),
+                        style: TextStyle(
+                            color: Color(0xFF4A148C),
+                            fontWeight: FontWeight.bold))
+                  ]),
+            ),
           ),
         ),
       ]),
