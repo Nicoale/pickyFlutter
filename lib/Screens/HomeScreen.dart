@@ -29,7 +29,7 @@ class _HomescreenState extends State<Homescreen> {
                 child: RaisedButton(
                   onPressed: () {},
                   color: Color(0xFF4A148C),
-                  child: Text('rider',
+                  child: Text('I am a Rider',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class _HomescreenState extends State<Homescreen> {
                 child: RaisedButton(
                   onPressed: () {},
                   color: Color(0xFF4A148C),
-                  child: Text('rider',
+                  child: Text('I need Gas',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
