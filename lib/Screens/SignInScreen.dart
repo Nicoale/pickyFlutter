@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:picky/api/api_base_helper.dart';
+
+BaseHelper _helper = BaseHelper();
+
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -24,12 +30,12 @@ class _SignInScreenState extends State<SignInScreen> {
             padding: const EdgeInsets.all(20),
             child: Row(
               children: <Widget>[
-                IconButton(icon: Icon(Icons.person), onPressed: () {}),
+                IconButton(icon: Icon(Icons.mail), onPressed: () {}),
                 Expanded(
                     child: Container(
                         margin: EdgeInsets.only(left: 4, right: 20),
                         child: TextField(
-                          decoration: InputDecoration(hintText: 'Username'),
+                          decoration: InputDecoration(hintText: 'Email'),
                         )))
               ],
             )),
@@ -91,4 +97,18 @@ class _SignInScreenState extends State<SignInScreen> {
       ]),
     );
   }
+
+Future<void> signin(String email,String password)async{
+
+try {
+  final response =await _helper.post('user', jsonEncode({
+    'email' : email,
+    'password': password
+  }));
+  
+} catch (e) {
+  print (e);
+}
+}
+
 }

@@ -11,7 +11,7 @@ class _HomescreenState extends State<Homescreen> {
     return Scaffold(
  body: ListView(children: <Widget>[
         Container( 
-          height: double.infinity ,
+          height: 500 ,
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fill,
@@ -60,5 +60,36 @@ class _HomescreenState extends State<Homescreen> {
         ]
       ),
     );
+  }
+}
+
+class BackButtonWidget extends StatelessWidget {
+  const BackButtonWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Stack(children: <Widget>[
+          Positioned(
+            bottom: 500,
+            child: Stack(children: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              Text('Back',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold))
+            ]),
+          ),
+  
+        ]));
   }
 }
