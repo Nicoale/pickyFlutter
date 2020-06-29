@@ -62,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Container(
                 height: 60,
                 child: RaisedButton(
-                  onPressed: () {},
+                   onPressed: () {Navigator.pushNamed(context, 'Home');},
                   color: Color(0xFF4A148C),
                   child: Text('SIGN IN',
                       style: TextStyle(

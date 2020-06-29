@@ -27,7 +27,7 @@ class _HomescreenState extends State<Homescreen> {
             child: Container(
                 height: 60,
                 child: RaisedButton(
-                  onPressed: () {},
+                   onPressed: () {Navigator.pushNamed(context, 'Location');},
                   color: Color(0xFF4A148C),
                   child: Text('I am a Rider',
                       style: TextStyle(
@@ -47,7 +47,7 @@ class _HomescreenState extends State<Homescreen> {
             child: Container(
                 height: 60,
                 child: RaisedButton(
-                  onPressed: () {},
+                   onPressed: () {Navigator.pushNamed(context, 'Location');},
                   color: Color(0xFF4A148C),
                   child: Text('I need Gas',
                       style: TextStyle(
