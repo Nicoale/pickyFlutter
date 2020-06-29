@@ -115,7 +115,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future<void> signin(String email, String password) async {
     try {
-      final response = await http.post( 'https:localhost/3000/',
+      final response = await http.post( 'http://localhost:3000/users/sign_in',
           headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     }, 

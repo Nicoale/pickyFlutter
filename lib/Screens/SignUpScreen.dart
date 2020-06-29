@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:picky/api/api_base_helper.dart';
 
@@ -142,8 +142,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
     Future<void> signup(String email,String username, String password) async {
     try {
-      final response = await _helper.post(
-          'user', jsonEncode({'email': email,'username':username, 'password': password}));
+      final response = await http.post( 'http://localhost:3000/users/sign_up',
+          headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    }, 
+           body:jsonEncode(
+           {'email': email, 
+           'password': password,
+           'username':username
+           }));
           switch (response.statusCode) {
             case 200:
              Navigator.pushNamed(context, 'Home');
@@ -152,10 +159,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             default:
             SnackBar(content: Text('Welcome! you are registered!'));
           }
+     
     } catch (e) {
       print(e);
     }
-  }
+    }
+ 
 }
 
 class BackButtonWidget extends StatelessWidget {
