@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Screens/SignInScreen.dart';
 import 'Screens/SignUpScreen.dart';
 import 'Screens/HomeScreen.dart';
+import 'call/call.dart';
 import 'geolocation/location.dart';
 void main() {
   runApp(MyApp());
@@ -22,13 +23,15 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'SignIn',
       routes: {
-        // 'SignIn': (context)=> SignInScreen(),
-        // 'SignUp': (context)=> SignUpScreen(),
-        // 'Home': (context)=> Homescreen(),
+        'SignIn': (context)=> SignInScreen(),
+        'SignUp': (context)=> SignUpScreen(),
+        'Home': (context)=> Homescreen(),
         'Location': (context)=> CurrentLocation(),
+        'Call': (context)=> CallWidget()
+
       },
 
-      home:CurrentLocation(),
+      home: CallWidget(),
     );
   }
 }
