@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:picky/api/api_base_helper.dart';
+
+BaseHelper _helper = BaseHelper();
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -6,6 +11,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+    String email;
+  String password;
+  String username;
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +39,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         SizedBox(
           height: 20,
         ),
+                Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: <Widget>[
+                IconButton(icon: Icon(Icons.lock), onPressed: () {}),
+                Expanded(
+                    child: Container(
+                        margin: EdgeInsets.only(left: 4, right: 20),
+                        child: TextField(
+                          onChanged: (username) {
+                            this.username = username;
+                          },
+                          decoration: InputDecoration(hintText: 'Username'),
+                        )))
+              ],
+            )),
+        SizedBox(
+                height: 20,
+              ),
         Padding(
             padding: const EdgeInsets.all(20),
             child: Row(
@@ -37,6 +67,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Container(
                         margin: EdgeInsets.only(left: 4, right: 20),
                         child: TextField(
+                          onChanged: (email) {
+                            this.email = email;
+                          },
                           decoration: InputDecoration(hintText: 'Email'),
                         )))
               ],
@@ -53,6 +86,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Container(
                         margin: EdgeInsets.only(left: 4, right: 20),
                         child: TextField(
+                          onChanged: (password) {
+                            this.password = password;
+                          },
                           decoration: InputDecoration(hintText: 'Password'),
                         )))
               ],
@@ -90,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Container(
         height: 60,
         child: RaisedButton(
-          onPressed: () {Navigator.pushNamed(context, 'Home');},
+          onPressed: () {signup(this.email, this.username,this.password);},
           color: Color(0xFF4A148C),
           child: Text('SIGN UP',
               style: TextStyle(
@@ -102,6 +138,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
       ]),
     );
+  }
+    Future<void> signup(String email,String username, String password) async {
+    try {
+      final response = await _helper.post(
+          'user', jsonEncode({'email': email,'username':username, 'password': password}));
+          switch (response.statusCode) {
+            case 200:
+             Navigator.pushNamed(context, 'Home');
+              
+              break;
+            default:
+            SnackBar(content: Text('Welcome! you are registered!'));
+          }
+    } catch (e) {
+      print(e);
+    }
   }
 }
 
