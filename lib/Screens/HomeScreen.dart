@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:picky/api/api_base_helper.dart';
+import 'dart:convert';
+
+
+BaseHelper _helper = BaseHelper();
 
 class Homescreen extends StatefulWidget {
   @override
@@ -6,6 +11,11 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+    String rider;
+  String gas;
+
+ final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +37,9 @@ class _HomescreenState extends State<Homescreen> {
             child: Container(
                 height: 60,
                 child: RaisedButton(
-                   onPressed: () {Navigator.pushNamed(context, 'Location');},
+                   onPressed:() {
+                            this.rider = rider;
+                          },
                   color: Color(0xFF4A148C),
                   child: Text('I am a Rider',
                       style: TextStyle(
@@ -47,7 +59,10 @@ class _HomescreenState extends State<Homescreen> {
             child: Container(
                 height: 60,
                 child: RaisedButton(
-                   onPressed: () {Navigator.pushNamed(context, 'Location');},
+                   onPressed: (){
+                            this.gas = gas;
+                          },
+                    // {Navigator.pushNamed(context, 'Location');},
                   color: Color(0xFF4A148C),
                   child: Text('I need Gas',
                       style: TextStyle(
@@ -60,6 +75,22 @@ class _HomescreenState extends State<Homescreen> {
         ]
       ),
     );
+  }
+    Future<void> signin(String rider, String gas) async {
+    try {
+      final response = await _helper.post(
+          'user', jsonEncode({'rider': rider, 'gas': gas}));
+          switch (response.statusCode) {
+            case 200:
+             Navigator.pushNamed(context, 'Location');
+              
+              break;
+            default:
+            SnackBar(content: Text(''));
+          }
+    } catch (e) {
+      print(e);
+    }
   }
 }
 
