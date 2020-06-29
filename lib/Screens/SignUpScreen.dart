@@ -25,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         BackButtonWidget(),
         Padding(
             padding: const EdgeInsets.all(20),
+            key: _formKey,
             child: Row(
               children: <Widget>[
                 IconButton(icon: Icon(Icons.person), onPressed: () {}),

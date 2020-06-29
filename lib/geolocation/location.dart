@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert';
+
+import 'package:picky/api/api_base_helper.dart';
+
+BaseHelper _helper = BaseHelper();
 
 class CurrentLocation extends StatefulWidget {
+  String location;
+
+
   @override
   _CurrentLocationState createState() => _CurrentLocationState();
 }
@@ -17,20 +25,6 @@ class _CurrentLocationState extends State<CurrentLocation> {
   void initState() {
     super.initState();
   
-  }
-
-  void getCurrentLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<Placemark> placemark = await Geolocator()
-        .placemarkFromCoordinates(position.latitude, position.longitude);
-    setState(() {
-      _customerPosition = LatLng(position.latitude, position.longitude);
-      print('${placemark[0].name}');
-    });
-  }
-    _onCameraMove(CameraPosition position) {
-    _customerPosition = position.target;
   }
 
   Widget build(BuildContext context) {
@@ -63,5 +57,36 @@ class _CurrentLocationState extends State<CurrentLocation> {
         color: Colors.purple);
       }),
     );
+  }
+
+  void getCurrentLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
+    setState(() {
+      _customerPosition = LatLng(position.latitude, position.longitude);
+      print('${placemark[0].name}');
+    });
+  }
+    _onCameraMove(CameraPosition position) {
+    _customerPosition = position.target;
+  }
+
+  Future<void> signin(String location) async {
+    try {
+      final response = await _helper.post(
+          'user', jsonEncode({'location':location}));
+          switch (response.statusCode) {
+            case 200:
+             Navigator.pushNamed(context, 'Home');
+              
+              break;
+            default:
+            SnackBar(content: Text('Call'));
+          }
+    } catch (e) {
+      print(e);
+    }
   }
 }
