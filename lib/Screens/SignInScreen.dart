@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-
 import 'package:picky/api/api_base_helper.dart';
+import 'package:http/http.dart' as http;
+
 
 BaseHelper _helper = BaseHelper();
 
@@ -13,6 +14,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   String email;
   String password;
+ 
 
   final _formKey = GlobalKey<FormState>();
 
@@ -113,16 +115,22 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future<void> signin(String email, String password) async {
     try {
-      final response = await _helper.post(
-          'user', jsonEncode({'email': email, 'password': password}));
-          switch (response.statusCode) {
-            case 200:
-             Navigator.pushNamed(context, 'Home');
-              
-              break;
-            default:
-            SnackBar(content: Text('Yay! you are logged!'));
-          }
+      final response = await http.post( 'https:localhost/3000/',
+          headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    }, 
+           body:jsonEncode(
+           {'email': email, 
+           'password': password
+           }));
+      switch (response.statusCode) {
+        case 200:
+          Navigator.pushNamed(context, 'Home');
+
+          break;
+        default:
+          SnackBar(content: Text('Yay! you are logged!'));
+      }
     } catch (e) {
       print(e);
     }
