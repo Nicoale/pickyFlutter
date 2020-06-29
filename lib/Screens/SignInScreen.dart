@@ -5,13 +5,17 @@ import 'package:picky/api/api_base_helper.dart';
 
 BaseHelper _helper = BaseHelper();
 
-
 class SignInScreen extends StatefulWidget {
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  String email;
+  String password;
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         Padding(
             padding: const EdgeInsets.all(20),
+            key: _formKey,
             child: Row(
               children: <Widget>[
                 IconButton(icon: Icon(Icons.mail), onPressed: () {}),
@@ -35,6 +40,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Container(
                         margin: EdgeInsets.only(left: 4, right: 20),
                         child: TextField(
+                          onChanged: (email) {
+                            this.email = email;
+                          },
                           decoration: InputDecoration(hintText: 'Email'),
                         )))
               ],
@@ -48,6 +56,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Container(
                         margin: EdgeInsets.only(left: 4, right: 20),
                         child: TextField(
+                          onChanged: (password) {
+                            this.password = password;
+                          },
                           decoration: InputDecoration(hintText: 'Password'),
                         )))
               ],
@@ -62,7 +73,9 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Container(
                 height: 60,
                 child: RaisedButton(
-                   onPressed: () {Navigator.pushNamed(context, 'Home');},
+                  onPressed: () {
+                    signin(this.email, this.password);
+                  },
                   color: Color(0xFF4A148C),
                   child: Text('SIGN IN',
                       style: TextStyle(
@@ -98,17 +111,20 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-Future<void> signin(String email,String password)async{
-
-try {
-  final response =await _helper.post('user', jsonEncode({
-    'email' : email,
-    'password': password
-  }));
-  
-} catch (e) {
-  print (e);
-}
-}
-
+  Future<void> signin(String email, String password) async {
+    try {
+      final response = await _helper.post(
+          'user', jsonEncode({'email': email, 'password': password}));
+          switch (response.statusCode) {
+            case 200:
+             Navigator.pushNamed(context, 'Home');
+              
+              break;
+            default:
+            SnackBar(content: Text('Yay! you are logged!'));
+          }
+    } catch (e) {
+      print(e);
+    }
+  }
 }
